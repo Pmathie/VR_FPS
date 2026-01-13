@@ -5,6 +5,7 @@ public class VR_Gun : MonoBehaviour
     public float damage;
     public float range;
     public float fireRate;
+    private float nextFireTime = 0f;
 
     private InputAction shootAction;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,6 +21,11 @@ public class VR_Gun : MonoBehaviour
         {
             Debug.Log("Pew Pew");
         }
+    }
+    void Shoot()
+    {
+        if (Time.time < nextFireTime)
+            return;
 
     }
 }
