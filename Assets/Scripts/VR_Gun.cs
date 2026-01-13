@@ -6,6 +6,9 @@ public class VR_Gun : MonoBehaviour
     public float range;
     public float fireRate;
     private float nextFireTime = 0f;
+    private bool isGrabbed = false;
+    public Transform muzzle;
+    public GameObject impactEffect;
 
     private InputAction shootAction;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,15 +20,31 @@ public class VR_Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (shootAction.IsPressed() && fireRate > 1)
+        if (shootAction.IsPressed() && isGrabbed)
         {
             Debug.Log("Pew Pew");
+            Shoot();
         }
     }
     void Shoot()
     {
         if (Time.time < nextFireTime)
             return;
+        nextFireTime = Time.time + fireRate;
 
+        RaycastHit hit;
+        if (Physics.Raycast(muzzle.position, muzzle.forward, out hit, range))
+        {
+            Debug.Log(hit.transform.name);
+            Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+        }
+    }
+    public void Grab()
+    {
+        isGrabbed = true;
+    }
+    public void Release()
+    {
+        isGrabbed = false;
     }
 }
