@@ -35,6 +35,11 @@ public class VR_Gun : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(muzzle.position, muzzle.forward, out hit, range))
         {
+            Target target = hit.transform.GetComponent<Target>();
+            if (target != null)
+            {
+                target.OnHit();
+            }
             Debug.Log(hit.transform.name);
             Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
         }
