@@ -1,10 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private float score;
-    
+    public TextMeshProUGUI scoreText;
+
     void Awake()
     {
         if(Instance != null && Instance != this)
@@ -30,5 +32,10 @@ public class GameManager : MonoBehaviour
     {
         score += points;
         Debug.Log("Score: " + score);
+        UpdateUI();
+    }
+    public void UpdateUI()
+    {
+        scoreText.text = "Score: " + score;
     }
 }
