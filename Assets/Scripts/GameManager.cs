@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private float score;
     public TextMeshProUGUI scoreText;
+    public GameObject[] Targets; 
 
     void Awake()
     {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         
     }
 
@@ -37,5 +39,14 @@ public class GameManager : MonoBehaviour
     public void UpdateUI()
     {
         scoreText.text = "Score: " + score;
+    }
+    public void ResetGame()
+    {
+        score = 0;
+        UpdateUI();
+        foreach (GameObject target in Targets)
+        {
+            target.GetComponent<Target>().ResetTarget();
+        }
     }
 }
